@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signature | Luxe AI-Powered Vision</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Preloader (Extra UI Polish) -->
+  <div id="preloader" style="position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 1s cubic-bezier(0.25, 1, 0.5, 1);">
+    <h1 class="serif gold-text" style="font-size: 4rem; letter-spacing: 0.2em; text-transform: uppercase; animation: pulse 2s infinite;">Signature</h1>
+  </div>
+
+  <!-- AI Concierge Drawer -->
+  <div class="concierge-drawer" id="concierge">
+    <div class="concierge-close" id="concierge-close-btn">Close</div>
+    <h2 class="serif gold-text" style="font-size: 2.5rem;">Signature AI</h2>
+    <div class="chat-container" id="chat">
+      <div class="chat-msg bot">Hello. I am the Signature Intelligence Agent. Brandon is currently overseeing a project site in Fort Lauderdale, but I can assist you with a preliminary scope.</div>
+      <div class="chat-msg bot">Tell me about your dream project. Is it a Residential Estate or a Commercial HQ?</div>
+    </div>
+    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+      <button class="gold-btn btn-residential" style="padding: 10px 20px; font-size: 0.6rem;">Residential</button>
+      <button class="gold-btn btn-commercial" style="padding: 10px 20px; font-size: 0.6rem;">Commercial</button>
+    </div>
+    <input type="text" class="chat-input" id="chat-input-field" placeholder="Type your message...">
+  </div>
+
+  <nav id="nav">
+    <div class="logo serif gold-text" id="logo-refresh">Signature</div>
+    <div style="display:flex; gap:30px; letter-spacing:0.2em; font-size:0.75rem; text-transform:uppercase;">
+      <a href="#projects" class="serif nav-link">Estates</a>
+      <a href="#vision-section" class="serif nav-link">Vision</a>
+      <a href="#tech" class="serif nav-link">Tech</a>
+      <a href="#vault" class="serif nav-link">The Vault</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000" class="hero-bg parallax-bg" alt="Luxury Interior">
+    <div class="container reveal">
+      <span class="gold-text" style="letter-spacing: 0.6em; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 30px;">Architecture • Intelligence • Art</span>
+      <h1 class="serif hero-title">Refining Reality through<br>Signature Intelligence</h1>
+      <button class="gold-btn btn-scroll-vision">Engage The Vision Tool</button>
+    </div>
+  </div>
+
+  <!-- Personalized Gallery -->
+  <section id="projects" class="container">
+    <div class="reveal" style="margin-bottom: 80px; text-align: center;">
+      <h2 class="serif" style="font-size: 4rem;">Bespoke Curation</h2>
+      <p style="opacity: 0.5; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Adaptive Intelligence Project Mapping</p>
+    </div>
+    <div class="project-grid" id="feed">
+      <div class="card reveal feed-card" data-type="Res">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" alt="Estate">
+        <div class="card-info">
+          <div><h3 class="serif" style="font-size: 1.8rem;">The Palms Estate</h3><p style="font-size: 0.7rem; opacity: 0.6;">Residential • 2025</p></div>
+          <span class="gold-text">Explore</span>
+        </div>
+      </div>
+      <div class="card reveal feed-card" data-type="Com">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200" alt="Corporate">
+        <div class="card-info">
+          <div><h3 class="serif" style="font-size: 1.8rem;">Onyx Square</h3><p style="font-size: 0.7rem; opacity: 0.6;">Commercial • 2026</p></div>
+          <span class="gold-text">Explore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Vision Tool -->
+  <section id="vision-section" style="background: #080808;">
+    <div class="container" style="text-align: center;">
+      <div class="reveal">
+        <h2 class="serif gold-text" style="font-size: 5rem; margin-bottom: 20px;">Signature Vision™</h2>
+        <p style="max-width: 800px; margin: 0 auto 60px; line-height: 2; opacity: 0.8; font-weight: 300;">
+          Our proprietary neural network transforms your current space in real-time. 
+          Upload a photo of your existing structure to witness a Signature-grade architectural rendering.
+        </p>
+      </div>
+
+      <div class="vision-container reveal">
+        <div class="processing-overlay" id="vision-overlay">Processing Signature Render...</div>
+        <div class="vision-scanline" id="scanline"></div>
+        <div class="vision-canvas-wrapper" id="vision-area">
+          <p id="vision-placeholder" style="opacity: 0.3; letter-spacing: 0.1em;">NO DATA INPUT DETECTED</p>
+          <img id="vision-preview-img" style="display:none">
+        </div>
+      </div>
+
+      <div class="reveal">
+        <input type="file" id="vision-file" style="display:none">
+        <button class="gold-btn" id="btn-upload">Select Space Image</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Tech Stack -->
+  <section id="tech" class="container">
+    <div class="reveal" style="margin-bottom: 20px;">
+      <h2 class="serif" style="font-size: 3.5rem;">The Signature Stack</h2>
+      <p class="gold-text" style="letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem;">Transparency Through Intelligence</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-item reveal">
+        <h3 class="serif">Neural Budgeting</h3>
+        <p>Our AI analyzes 40 years of market volatility to ensure your project stays on budget, regardless of material shifts.</p>
+      </div>
+      <div class="tech-item reveal">
+        <h3 class="serif">Structural Audit</h3>
+        <p>Automated architectural integrity checks at every milestone ensure timeless character and safety.</p>
+      </div>
+      <div class="tech-item reveal">
+        <h3 class="serif">Predictive Timelines</h3>
+        <p>Using predictive logic across multiple sites, we forecast potential delays weeks before they occur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / AI Bubble -->
+  <footer style="padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;" id="vault">
+    <div class="container reveal">
+      <h2 class="serif gold-text" style="font-size: 3rem; margin-bottom: 30px;">The Signature Vault</h2>
+      <p style="opacity: 0.5; margin-bottom: 40px;">Exclusive client portal for real-time AI site updates.</p>
+      <button class="gold-btn" id="btn-open-vault">Client Login</button>
+    </div>
+  </footer>
+
+  <!-- The Vault Modal -->
+  <div class="vault-modal" id="vault-modal">
+    <div class="vault-close" id="vault-close-btn">Close</div>
+    <div class="vault-dashboard">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(212,175,55,0.2); margin-bottom: 40px; padding-bottom: 20px;">
+        <h2 class="serif gold-text" style="font-size: 3rem;">The Palms Estate • Protocol</h2>
+        <button class="gold-btn" id="btn-download-report" style="padding: 12px 24px; font-size: 0.6rem;">Download Full Blueprint</button>
+      </div>
+      
+      <div class="tech-grid" style="margin-top: 0;">
+        <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Neural Budget</h3>
+          <h1 style="font-size: 3.5rem; line-height: 1;">$4.2M</h1>
+          <p style="color: #6ee7b7; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">VARIANCE: -1.2% (OPTIMIZED)</p>
+        </div>
+        <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Construction Phase</h3>
+          <h1 style="font-size: 3.5rem; line-height: 1;">62%</h1>
+          <p style="opacity: 0.6; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">CURRENT: STRUCTURAL FRAMING</p>
+        </div>
+        <div class="glass vault-audit-card" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Recent AI Audit</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">The machine vision system has scanned 142 framing joints. 100% compliance with Signature integrity standards. Next milestone scan in 4 days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-bubble" id="btn-ai-bubble">
+    <svg width="36" height="36" fill="black" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path></svg>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signature | Luxe AI-Powered Vision</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rich-black: #050505;
+      --gold-primary: #D4AF37;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --gold-dark: #A68B2F;
+      --platinum: #F5F5F7;
+      --charcoal: #121212;
+      --font-heading: "Cormorant Garamond", serif;
+      --font-body: "Montserrat", sans-serif;
+      --transition-slow: 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-medium: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--rich-black);
+      color: var(--platinum);
+      font-family: var(--font-body);
+      font-weight: 200;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .serif { font-family: var(--font-heading); }
+
+    /* Layout */
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+    section { padding: 120px 0; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+
+    /* Typography */
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 400; }
+    .gold-text { color: var(--gold-primary); }
+
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; width: 100%; padding: 40px 60px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      transition: var(--transition-medium);
+    }
+    nav.scrolled { padding: 20px 60px; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.1); }
+    .logo { font-size: 2.2rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; }
+
+    /* Hero */
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; }
+    .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; filter: brightness(0.4); }
+    .hero-title { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.85; margin-bottom: 30px; }
+    .gold-btn { 
+      padding: 18px 48px; border: 1px solid var(--gold-primary); color: var(--gold-primary); 
+      text-transform: uppercase; letter-spacing: 0.3em; cursor: pointer; transition: 0.4s; 
+      background: none; font-size: 0.75rem; font-weight: 400;
+    }
+    .gold-btn:hover { background: var(--gold-primary); color: #000; box-shadow: 0 0 30px var(--gold-glow); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition-slow); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Personalized Feed */
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
+    .card { position: relative; aspect-ratio: 16/10; overflow: hidden; border-radius: 2px; cursor: pointer; }
+    .card img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s var(--transition-slow); }
+    .card:hover img { transform: scale(1.1); }
+    .card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); display: flex; justify-content: space-between; align-items: flex-end; opacity: 0; transition: 0.5s; }
+    .card:hover .card-info { opacity: 1; }
+
+    /* Vision Tool */
+    .vision-container { position: relative; width: 100%; max-width: 1000px; height: 600px; margin: 40px auto; border: 1px solid rgba(212,175,55,0.2); overflow: hidden; background: #080808; border-radius: 4px; }
+    .vision-canvas-wrapper { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    #vision-preview-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .vision-scanline { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold-primary); box-shadow: 0 0 15px var(--gold-primary); z-index: 10; display: none; pointer-events: none; }
+    .processing-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; color: var(--gold-primary); letter-spacing: 0.2em; font-size: 0.8rem; text-transform: uppercase; }
+
+    /* AI Concierge Drawer */
+    .concierge-drawer {
+      position: fixed; right: -500px; top: 0; width: 500px; height: 100vh; 
+      background: var(--charcoal); z-index: 2000; transition: var(--transition-medium);
+      padding: 60px 40px; display: flex; flex-direction: column; border-left: 1px solid rgba(212,175,55,0.1);
+    }
+    .concierge-drawer.active { right: 0; box-shadow: -20px 0 50px rgba(0,0,0,0.8); }
+    .concierge-close { position: absolute; top: 40px; right: 40px; cursor: pointer; color: var(--gold-primary); }
+    .chat-container { flex-grow: 1; overflow-y: auto; margin: 40px 0; scrollbar-width: none; }
+    .chat-msg { margin-bottom: 25px; max-width: 85%; line-height: 1.6; font-size: 0.95rem; }
+    .chat-msg.bot { color: var(--platinum); }
+    .chat-msg.user { margin-left: auto; color: var(--gold-primary); text-align: right; }
+    .chat-input { background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; color: #fff; font-family: var(--font-body); width: 100%; outline: none; }
+
+    .ai-bubble { 
+      position: fixed; bottom: 40px; right: 40px; width: 80px; height: 80px; 
+      background: var(--gold-primary); border-radius: 50%; display: flex; 
+      align-items: center; justify-content: center; cursor: pointer; z-index: 1001; 
+      transition: 0.5s;
+    }
+    .ai-bubble:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 30px var(--gold-glow); }
+
+    /* Sections */
+    .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-top: 60px; }
+    .tech-item h3 { font-size: 1.8rem; margin-bottom: 15px; }
+    .tech-item p { font-size: 0.9rem; opacity: 0.6; line-height: 1.8; }
+
+    /* Animations */
+    @keyframes scan { from { top: 0; } to { top: 100%; } }
+    .scanning { animation: scan 3s linear infinite; display: block; }
+
+    /* Vault Modal */
+    .vault-modal { position: fixed; inset: 0; background: rgba(5,5,5,0.98); z-index: 3000; opacity: 0; pointer-events: none; transition: var(--transition-medium); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
+    .vault-modal.active { opacity: 1; pointer-events: all; }
+    .vault-close { position: absolute; top: 40px; right: 60px; cursor: pointer; color: var(--gold-primary); letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem; }
+    .vault-dashboard { width: 100%; max-width: 1200px; padding: 40px; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .project-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; gap: 40px; }
+      .concierge-drawer { width: 100%; right: -100%; }
+      nav { padding: 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AI Concierge Drawer -->
+  <div class="concierge-drawer" id="concierge">
+    <div class="concierge-close" onclick="toggleConcierge()">Close</div>
+    <h2 class="serif gold-text" style="font-size: 2.5rem;">Signature AI</h2>
+    <div class="chat-container" id="chat">
+      <div class="chat-msg bot">Hello. I am the Signature Intelligence Agent. Brandon is currently overseeing a project site in Fort Lauderdale, but I can assist you with a preliminary scope.</div>
+      <div class="chat-msg bot">Tell me about your dream project. Is it a Residential Estate or a Commercial HQ?</div>
+    </div>
+    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+      <button class="gold-btn" style="padding: 10px 20px; font-size: 0.6rem;" onclick="botReply('Residential')">Residential</button>
+      <button class="gold-btn" style="padding: 10px 20px; font-size: 0.6rem;" onclick="botReply('Commercial')">Commercial</button>
+    </div>
+    <input type="text" class="chat-input" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') botReply(this.value)">
+  </div>
+
+  <nav id="nav">
+    <div class="logo serif gold-text" onclick="location.reload()">Signature</div>
+    <div style="display:flex; gap:30px; letter-spacing:0.2em; font-size:0.75rem; text-transform:uppercase;">
+      <a href="#projects" class="serif">Estates</a>
+      <a href="#vision-section" class="serif">Vision</a>
+      <a href="#tech" class="serif">Tech</a>
+      <a href="#vault" class="serif">The Vault</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000" class="hero-bg" alt="Luxury Interior">
+    <div class="container reveal">
+      <span class="gold-text" style="letter-spacing: 0.6em; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 30px;">Architecture • Intelligence • Art</span>
+      <h1 class="serif hero-title">Refining Reality through<br>Signature Intelligence</h1>
+      <button class="gold-btn" onclick="scrollToId('vision-section')">Engage The Vision Tool</button>
+    </div>
+  </div>
+
+  <!-- Personalized Gallery -->
+  <section id="projects" class="container">
+    <div class="reveal" style="margin-bottom: 80px; text-align: center;">
+      <h2 class="serif" style="font-size: 4rem;">Bespoke Curation</h2>
+      <p style="opacity: 0.5; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Adaptive Intelligence Project Mapping</p>
+    </div>
+    <div class="project-grid" id="feed">
+      <div class="card reveal" data-type="Res" onclick="trackClick('Res')">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" alt="Estate">
+        <div class="card-info">
+          <div><h3 class="serif" style="font-size: 1.8rem;">The Palms Estate</h3><p style="font-size: 0.7rem; opacity: 0.6;">Residential • 2025</p></div>
+          <span class="gold-text">Explore</span>
+        </div>
+      </div>
+      <div class="card reveal" data-type="Com" onclick="trackClick('Com')">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200" alt="Corporate">
+        <div class="card-info">
+          <div><h3 class="serif" style="font-size: 1.8rem;">Onyx Square</h3><p style="font-size: 0.7rem; opacity: 0.6;">Commercial • 2026</p></div>
+          <span class="gold-text">Explore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Vision Tool -->
+  <section id="vision-section" style="background: #080808;">
+    <div class="container" style="text-align: center;">
+      <div class="reveal">
+        <h2 class="serif gold-text" style="font-size: 5rem; margin-bottom: 20px;">Signature Vision™</h2>
+        <p style="max-width: 800px; margin: 0 auto 60px; line-height: 2; opacity: 0.8; font-weight: 300;">
+          Our proprietary neural network transforms your current space in real-time. 
+          Upload a photo of your existing structure to witness a Signature-grade architectural rendering.
+        </p>
+      </div>
+
+      <div class="vision-container reveal">
+        <div class="processing-overlay" id="vision-overlay">Processing Signature Render...</div>
+        <div class="vision-scanline" id="scanline"></div>
+        <div class="vision-canvas-wrapper" id="vision-area">
+          <p id="vision-placeholder" style="opacity: 0.3; letter-spacing: 0.1em;">NO DATA INPUT DETECTED</p>
+          <img id="vision-preview-img" style="display:none">
+        </div>
+      </div>
+
+      <div class="reveal">
+        <input type="file" id="vision-file" style="display:none" onchange="handleVision(this)">
+        <button class="gold-btn" onclick="document.getElementById('vision-file').click()">Select Space Image</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Tech Stack -->
+  <section id="tech" class="container">
+    <div class="reveal" style="margin-bottom: 20px;">
+      <h2 class="serif" style="font-size: 3.5rem;">The Signature Stack</h2>
+      <p class="gold-text" style="letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem;">Transparency Through Intelligence</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-item reveal">
+        <h3 class="serif">Neural Budgeting</h3>
+        <p>Our AI analyzes 40 years of market volatility to ensure your project stays on budget, regardless of material shifts.</p>
+      </div>
+      <div class="tech-item reveal">
+        <h3 class="serif">Structural Audit</h3>
+        <p>Automated architectural integrity checks at every milestone ensure timeless character and safety.</p>
+      </div>
+      <div class="tech-item reveal">
+        <h3 class="serif">Predictive Timelines</h3>
+        <p>Using predictive logic across multiple sites, we forecast potential delays weeks before they occur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / AI Bubble -->
+  <footer style="padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;" id="vault">
+    <div class="container reveal">
+      <h2 class="serif gold-text" style="font-size: 3rem; margin-bottom: 30px;">The Signature Vault</h2>
+      <p style="opacity: 0.5; margin-bottom: 40px;">Exclusive client portal for real-time AI site updates.</p>
+      <button class="gold-btn" onclick="openVault()">Client Login</button>
+    </div>
+  </footer>
+
+  <!-- The Vault Modal -->
+  <div class="vault-modal" id="vault-modal">
+    <div class="vault-close" onclick="closeVault()">Close</div>
+    <div class="vault-dashboard">
+      <h2 class="serif gold-text" style="font-size: 3rem; margin-bottom: 40px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 20px;">The Palms Estate • Protocol</h2>
+      
+      <div class="tech-grid" style="margin-top: 0;">
+        <div class="glass" style="padding: 30px; border-radius: 4px;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Neural Budget</h3>
+          <h1 style="font-size: 3.5rem; line-height: 1;">$4.2M</h1>
+          <p style="color: #6ee7b7; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">VARIANCE: -1.2% (OPTIMIZED)</p>
+        </div>
+        <div class="glass" style="padding: 30px; border-radius: 4px;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Construction Phase</h3>
+          <h1 style="font-size: 3.5rem; line-height: 1;">62%</h1>
+          <p style="opacity: 0.6; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">CURRENT: STRUCTURAL FRAMING</p>
+        </div>
+        <div class="glass" style="padding: 30px; border-radius: 4px;">
+          <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Recent AI Audit</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">The machine vision system has scanned 142 framing joints. 100% compliance with Signature integrity standards. Next milestone scan in 4 days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-bubble" onclick="toggleConcierge()">
+    <svg width="36" height="36" fill="black" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path></svg>
+  </div>
+
+  <script>
+    // 1. Reveal Engine
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 2. Personalization Logic
+    function trackClick(type) {
+      let p = JSON.parse(localStorage.getItem('sig_p') || '{"Res":0,"Com":0}');
+      p[type]++;
+      localStorage.setItem('sig_p', JSON.stringify(p));
+      // Soft feedback instead of hard reload for better UX
+      console.log(`Adapting UI for ${type} preference...`);
+    }
+
+    function applyPersonalization() {
+      let p = JSON.parse(localStorage.getItem('sig_p') || '{"Res":0,"Com":0}');
+      const feed = document.getElementById('feed');
+      const cards = Array.from(feed.children);
+      cards.sort((a,b) => (p[b.dataset.type] || 0) - (p[a.dataset.type] || 0));
+      cards.forEach(c => feed.appendChild(c));
+    }
+
+    // 3. AI Vision Simulation
+    function handleVision(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const img = document.getElementById('vision-preview-img');
+        const placeholder = document.getElementById('vision-placeholder');
+        const overlay = document.getElementById('vision-overlay');
+        const scanline = document.getElementById('scanline');
+
+        reader.onload = function(e) {
+          img.src = e.target.result;
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          
+          overlay.style.display = 'flex';
+          scanline.style.display = 'block';
+          scanline.classList.add('scanning');
+
+          setTimeout(() => {
+            overlay.innerHTML = "Signature Neural Audit Complete.<br><span class='gold-text' style='font-size:0.6rem'>Potential Value Increase: +42%</span>";
+            img.style.filter = "contrast(1.2) brightness(0.8) sepia(0.3) saturate(0.5)"; // Signature Filter
+            scanline.classList.remove('scanning');
+            scanline.style.display = 'none';
+          }, 3000);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // 4. AI Concierge Logic
+    function toggleConcierge() {
+      document.getElementById('concierge').classList.toggle('active');
+    }
+
+    let chatStage = 0;
+    let projectType = '';
+
+    function botReply(msg) {
+      if (!msg.trim()) return;
+      const chat = document.getElementById('chat');
+      const userMsg = document.createElement('div');
+      userMsg.className = "chat-msg user";
+      userMsg.innerText = msg;
+      chat.appendChild(userMsg);
+      document.querySelector('.chat-input').value = '';
+      chat.scrollTop = chat.scrollHeight;
+
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = "chat-msg bot";
+        
+        if (chatStage === 0) {
+          projectType = msg;
+          botMsg.innerText = "Excellent choice. " + msg + " excellence is our heritage. What is the location or zip code of the project?";
+          chatStage++;
+        } else if (chatStage === 1) {
+          botMsg.innerText = "Perfect. And finally, what is the anticipated budget tier for this project?";
+          chatStage++;
+        } else if (chatStage === 2) {
+          botMsg.innerText = `I have recorded that. Analyzing architectural feasibility for your ${projectType} project. Brandon will reach out shortly to begin the drafting phase.`;
+          chatStage++;
+        } else {
+          botMsg.innerText = `Thank you. The Signature Intelligence Agent will notify Brandon regarding any further details you provide.`;
+        }
+
+        chat.appendChild(botMsg);
+        chat.scrollTop = chat.scrollHeight;
+      }, 1000);
+    }
+
+    // 5. Vault Logic
+    function openVault() { document.getElementById('vault-modal').classList.add('active'); }
+    function closeVault() { document.getElementById('vault-modal').classList.remove('active'); }
+
+    // 5. General Utils
+    window.onload = () => {
+      applyPersonalization();
+      window.addEventListener('scroll', () => {
+        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+      });
+    };
+
+    function scrollToId(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+  </script>
+</body>
+</html>
