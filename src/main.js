@@ -3,14 +3,37 @@ import './style.css'
 // 0. Preloader Logic
 window.addEventListener('load', () => {
   const preloader = document.getElementById('preloader');
+  const debrisContainer = document.getElementById('debris');
+  
   if (preloader) {
+    // Generate debris fragments for the "breaking wall" effect
+    for(let i=0; i<40; i++) {
+      const d = document.createElement('div');
+      d.className = 'debris';
+      const size = Math.random() * 80 + 20;
+      d.style.width = size + 'px';
+      d.style.height = size + 'px';
+      d.style.left = Math.random() * 100 + '%';
+      d.style.top = Math.random() * 100 + '%';
+      d.style.setProperty('--dx', (Math.random() * 1000 - 500) + 'px');
+      d.style.setProperty('--dy', (Math.random() * 1000 + 500) + 'px');
+      d.style.setProperty('--dr', (Math.random() * 720 - 360) + 'deg');
+      d.style.opacity = '0';
+      debrisContainer.appendChild(d);
+    }
+
     setTimeout(() => {
-      preloader.classList.add('wall-fall');
+      preloader.classList.add('crumble');
+      // Set debris into motion
+      document.querySelectorAll('.debris').forEach(d => {
+        d.style.animation = `debrisFall ${Math.random() * 1 + 1}s cubic-bezier(0.5, 0, 1, 0.5) forwards`;
+      });
+
       setTimeout(() => {
         preloader.style.display = 'none';
         initializePanopticon();
-      }, 1500); // Wait for the animation to finish
-    }, 1000); // Show logo for 1 second before falling
+      }, 1500); 
+    }, 2500); // Allow logo to be seen
   } else {
     initializePanopticon();
   }
@@ -216,18 +239,18 @@ function botReply(msg, isUser = false) {
 function handleLogic(userText) {
   if (chatStage === 0) {
     projectType = userText;
-    botReply("Acknowledged. Our architectural auditing via GEOS, AEOS, and SEOS protocols requires a minimum liquidity threshold of $5,000,000. Does your project's capital stack align with this macro-scale requirement?");
+    botReply("Acknowledged. Architectural auditing via GEOS, AEOS, and SEOS protocols requires a base liquidity of $5,000,000. Does your capital stack align with these macro-scale requirements?");
     chatStage++;
   } else if (chatStage === 1) {
     if(userText.toLowerCase().includes('yes') || userText.toLowerCase().includes('y')) {
-      botReply("Strategic alignment confirmed. Provide the target coordinates, zip code, or neighborhood for this development.");
+      botReply("Strategic alignment confirmed. Provide target coordinates, zip code, or neighborhood for this development.");
       chatStage++;
     } else {
       botReply("Signature Architectural Intelligence does not compromise on execution. We specialize in portfolios reaching into the 10s of thousands of millions. Perhaps our entry-level consultations would be more appropriate?");
       chatStage = 99; // End thread
     }
   } else if (chatStage === 2) {
-    botReply(`Location locked. Initiating preliminary demographic and zoning intelligence. Brandon has been notified of your intent. Note: Missed call text automation is now active for your profile.`);
+    botReply(`Location locked. Initiating preliminary demographic and zoning intelligence. Brandon has been notified. Note: Missed call text automation is now active for your profile. Expected reach: millions.`);
     chatStage++;
   } else {
     // Silent drop - psychological distance
