@@ -4,11 +4,13 @@ import './style.css'
 window.addEventListener('load', () => {
   const preloader = document.getElementById('preloader');
   if (preloader) {
-    preloader.style.opacity = '0';
     setTimeout(() => {
-      preloader.style.display = 'none';
-      initializePanopticon();
-    }, 1000);
+      preloader.classList.add('wall-fall');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        initializePanopticon();
+      }, 1500); // Wait for the animation to finish
+    }, 1000); // Show logo for 1 second before falling
   } else {
     initializePanopticon();
   }
@@ -214,7 +216,7 @@ function botReply(msg, isUser = false) {
 function handleLogic(userText) {
   if (chatStage === 0) {
     projectType = userText;
-    botReply("Acknowledged. Our minimum engagement for bespoke structures begins at $2.5M. Does your financial reality align with this requirement?");
+    botReply("Acknowledged. Our minimum engagement for bespoke projects begins at $10,000. Does your financial reality align with this requirement?");
     chatStage++;
   } else if (chatStage === 1) {
     if(userText.toLowerCase().includes('yes') || userText.toLowerCase().includes('y')) {
