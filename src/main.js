@@ -216,18 +216,18 @@ function botReply(msg, isUser = false) {
 function handleLogic(userText) {
   if (chatStage === 0) {
     projectType = userText;
-    botReply("Acknowledged. Our minimum engagement for bespoke projects begins at $10,000. Does your financial reality align with this requirement?");
+    botReply("Acknowledged. Our architectural auditing via GEOS, AEOS, and SEOS protocols requires a minimum liquidity threshold of $5,000,000. Does your project's capital stack align with this macro-scale requirement?");
     chatStage++;
   } else if (chatStage === 1) {
     if(userText.toLowerCase().includes('yes') || userText.toLowerCase().includes('y')) {
-      botReply("Proceeding. What is the specific zip code or neighborhood for this development?");
+      botReply("Strategic alignment confirmed. Provide the target coordinates, zip code, or neighborhood for this development.");
       chatStage++;
     } else {
-      botReply("Signature Contracting does not compromise on materials or execution. We recommend reviewing our tech stack to understand the value of our neural budgeting.");
+      botReply("Signature Architectural Intelligence does not compromise on execution. We specialize in portfolios reaching into the 10s of thousands of millions. Perhaps our entry-level consultations would be more appropriate?");
       chatStage = 99; // End thread
     }
   } else if (chatStage === 2) {
-    botReply(`Location locked. Initiating preliminary demographic and zoning intelligence. Brandon has been notified of your intent. We will not waste your time; do not waste ours.`);
+    botReply(`Location locked. Initiating preliminary demographic and zoning intelligence. Brandon has been notified of your intent. Note: Missed call text automation is now active for your profile.`);
     chatStage++;
   } else {
     // Silent drop - psychological distance

@@ -37,7 +37,9 @@
 
   <!-- Preloader (Extra UI Polish) -->
   <div id="preloader" style="position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 1s cubic-bezier(0.25, 1, 0.5, 1);">
-    <h1 class="serif gold-text" style="font-size: 4rem; letter-spacing: 0.2em; text-transform: uppercase; animation: pulse 2s infinite;">Signature</h1>
+    <div style="text-align: center;">
+      <img src="/signaturelogo.png" alt="Signature logo" style="max-width: 300px; height: auto; margin-bottom: 20px;">
+    </div>
   </div>
 
   <!-- AI Concierge Drawer -->
@@ -56,21 +58,22 @@
   </div>
 
   <nav id="nav">
-    <div class="logo serif gold-text" id="logo-refresh">Signature</div>
-    <div style="display:flex; gap:30px; letter-spacing:0.2em; font-size:0.75rem; text-transform:uppercase;">
-      <a href="#projects" class="serif nav-link">Estates</a>
+    <div class="logo-container" id="logo-refresh" style="cursor: pointer;">
+      <img src="/signaturelogo.png" alt="Signature logo" style="height: 60px; width: auto;">
+    </div>
+    <div style="display:flex; gap:30px; letter-spacing:0.2em; font-size:0.75rem; text-transform:uppercase; align-items: center;">
+      <a href="#projects" class="serif nav-link">GEOS • AEOS • SEOS</a>
       <a href="#vision-section" class="serif nav-link">Vision</a>
-      <a href="#tech" class="serif nav-link">Tech</a>
+      <a href="#tech" class="serif nav-link">Intelligence</a>
       <a href="#vault" class="serif nav-link">The Vault</a>
+      <a href="tel:5551234567" class="serif gold-text" style="font-weight: 600; border: 1px solid var(--gold-primary); padding: 5px 15px; border-radius: 20px; text-decoration: none;">Text: Missed Call</a>
     </div>
   </nav>
 
   <!-- Hero Section -->
   <div class="hero">
     <picture>
-      <source srcset="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000&fm=webp" type="image/webp" />
-      <source srcset="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000&fm=jpg" type="image/jpeg" />
-      <img src="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000" class="hero-bg parallax-bg" alt="Luxury Interior" decoding="async">
+      <img src="/Signaturehero.jpg" class="hero-bg parallax-bg" alt="Luxury Architectural Vision" decoding="async">
     </picture>
     <div class="container reveal">
       <span class="gold-text" style="letter-spacing: 0.6em; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 30px;">Architecture • Intelligence • Art</span>
@@ -82,8 +85,8 @@
   <!-- Personalized Gallery -->
   <section id="projects" class="container">
     <div class="reveal" style="margin-bottom: 80px; text-align: center;">
-      <h2 class="serif" style="font-size: 4rem;">Bespoke Curation</h2>
-      <p style="opacity: 0.5; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">Adaptive Intelligence Project Mapping</p>
+      <h2 class="serif" style="font-size: 4rem;">Elite Ecosystem</h2>
+      <p style="opacity: 0.5; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.8rem;">GEOS • AEOS • SEOS Integration</p>
     </div>
     <div class="project-grid" id="feed">
       <div class="card reveal feed-card" data-type="Res">
@@ -141,8 +144,8 @@
   <!-- The Tech Stack -->
   <section id="tech" class="container">
     <div class="reveal" style="margin-bottom: 20px;">
-      <h2 class="serif" style="font-size: 3.5rem;">The Signature Stack</h2>
-      <p class="gold-text" style="letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem;">Transparency Through Intelligence</p>
+      <h2 class="serif" style="font-size: 3.5rem;">Macro-Scale Intelligence</h2>
+      <p class="gold-text" style="letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem;">Managing the 10s of Thousands of Millions</p>
     </div>
     <div class="tech-grid">
       <div class="tech-item reveal">
@@ -164,7 +167,7 @@
   <footer style="padding: 100px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;" id="vault">
     <div class="container reveal">
       <h2 class="serif gold-text" style="font-size: 3rem; margin-bottom: 30px;">The Signature Vault</h2>
-      <p style="opacity: 0.5; margin-bottom: 40px;">Exclusive client portal for real-time AI site updates.</p>
+      <p style="opacity: 0.5; margin-bottom: 40px;">Monitoring high-stakes capital: 10s of thousands of millions in active development.</p>
       <button class="gold-btn" id="btn-open-vault">Client Login</button>
     </div>
   </footer>
@@ -181,7 +184,7 @@
       <div class="tech-grid" style="margin-top: 0;">
         <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
           <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Neural Budget</h3>
-          <h1 style="font-size: 3.5rem; line-height: 1;">$10,500</h1>
+          <h1 style="font-size: 3.5rem; line-height: 1;">$85,000,000</h1>
           <p id="vault-variance" style="color: var(--gold-primary); font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">VARIANCE: -1.2% (OPTIMIZED)</p>
         </div>
         <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
