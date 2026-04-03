@@ -8,6 +8,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are the 2024 hurricane code requirements for window and door replacements in Broward County?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In Broward County, the 2024 Florida Building Code (FBC) requires all new window and door installations to meet High-Velocity Hurricane Zone (HVHZ) standards. This includes impact-resistant glass or a certified shutter system, minimum design pressure (DP) ratings based on your property's location and height, and installation using approved anchoring methods. Signature Contracting ensures all installations are fully compliant and certified to protect your home."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does a typical luxury kitchen remodel take in Fort Lauderdale, from design to completion?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A luxury kitchen remodel in Fort Lauderdale typically spans 8 to 12 weeks. This is broken down into: Phase 1: Design & Permitting (2-4 weeks), Phase 2: Demolition & Rough-in (1-2 weeks), Phase 3: Installation (3-5 weeks), and Phase 4: Finishing & Inspection (1-2 weeks). Signature Contracting provides a detailed project calendar to ensure transparency and on-time delivery."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -43,7 +67,11 @@
 
   <!-- Hero Section -->
   <div class="hero">
-    <img src="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000" class="hero-bg parallax-bg" alt="Luxury Interior">
+    <picture>
+      <source srcset="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000&fm=webp" type="image/webp" />
+      <source srcset="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000&fm=jpg" type="image/jpeg" />
+      <img src="https://images.unsplash.com/photo-1628592102751-ba83b03dadb6?auto=format&fit=crop&q=80&w=2000" class="hero-bg parallax-bg" alt="Luxury Interior" decoding="async">
+    </picture>
     <div class="container reveal">
       <span class="gold-text" style="letter-spacing: 0.6em; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 30px;">Architecture • Intelligence • Art</span>
       <h1 class="serif hero-title">Refining Reality through<br>Signature Intelligence</h1>
@@ -59,14 +87,22 @@
     </div>
     <div class="project-grid" id="feed">
       <div class="card reveal feed-card" data-type="Res">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" alt="Estate">
+        <picture>
+          <source srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200&fm=webp" type="image/webp" />
+          <source srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200&fm=jpg" type="image/jpeg" />
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" alt="Estate" loading="lazy" decoding="async" style="display: block; width: 100%; height: 100%; object-fit: cover; background-color: #f0f0f0;">
+        </picture>
         <div class="card-info">
           <div><h3 class="serif" style="font-size: 1.8rem;">The Palms Estate</h3><p style="font-size: 0.7rem; opacity: 0.6;">Residential • 2025</p></div>
           <span class="gold-text">Explore</span>
         </div>
       </div>
       <div class="card reveal feed-card" data-type="Com">
-        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200" alt="Corporate">
+        <picture>
+          <source srcset="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200&fm=webp" type="image/webp" />
+          <source srcset="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200&fm=jpg" type="image/jpeg" />
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200" alt="Corporate" loading="lazy" decoding="async" style="display: block; width: 100%; height: 100%; object-fit: cover; background-color: #f0f0f0;">
+        </picture>
         <div class="card-info">
           <div><h3 class="serif" style="font-size: 1.8rem;">Onyx Square</h3><p style="font-size: 0.7rem; opacity: 0.6;">Commercial • 2026</p></div>
           <span class="gold-text">Explore</span>
@@ -146,7 +182,7 @@
         <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
           <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Neural Budget</h3>
           <h1 style="font-size: 3.5rem; line-height: 1;">$4.2M</h1>
-          <p style="color: #6ee7b7; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">VARIANCE: -1.2% (OPTIMIZED)</p>
+          <p id="vault-variance" style="color: #6ee7b7; font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 10px;">VARIANCE: -1.2% (OPTIMIZED)</p>
         </div>
         <div class="glass" style="padding: 30px; border-radius: 4px; transition: 0.4s; cursor: pointer;">
           <h3 class="serif gold-text" style="margin-bottom: 10px; font-size: 1.5rem;">Construction Phase</h3>

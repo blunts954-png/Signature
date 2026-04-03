@@ -7,17 +7,20 @@ window.addEventListener('load', () => {
     preloader.style.opacity = '0';
     setTimeout(() => {
       preloader.style.display = 'none';
-      // Trigger animations for the first section
-      applyPersonalization();
+      initializePanopticon();
     }, 1000);
   } else {
-    applyPersonalization();
+    initializePanopticon();
   }
 });
 
-// 1. Reveal Engine
+// 1. Reveal Engine & Dynamic Schema
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  entries.forEach(e => { 
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
@@ -48,32 +51,65 @@ document.querySelectorAll('.nav-link, .btn-scroll-vision, #logo-refresh').forEac
   });
 });
 
-// 2. Personalization Logic
-function trackClick(type) {
-  let p = JSON.parse(localStorage.getItem('sig_p') || '{"Res":0,"Com":0}');
-  p[type]++;
-  localStorage.setItem('sig_p', JSON.stringify(p));
-  console.log(`Adapting UI for ${type} preference...`);
+// 2. The Panopticon (Behavioral Tracking & Domination)
+function initializePanopticon() {
+  let p = JSON.parse(localStorage.getItem('sig_intel') || '{"res":0,"com":0,"scrollDepth":0,"techTime":0}');
+  
+  // Track dwell time
+  let lastScroll = Date.now();
+  
+  window.addEventListener('scroll', () => {
+    let now = Date.now();
+    let scrollDepth = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    if(scrollDepth > p.scrollDepth) p.scrollDepth = scrollDepth;
+    localStorage.setItem('sig_intel', JSON.stringify(p));
+  });
+
+  // Track specific interest (simulated dwell tracking for cards)
+  document.querySelectorAll('.feed-card').forEach(card => {
+    let enterTime = 0;
+    card.addEventListener('mouseenter', () => { enterTime = Date.now(); });
+    card.addEventListener('mouseleave', () => {
+      let duration = Date.now() - enterTime;
+      let type = card.dataset.type.toLowerCase();
+      p[type] += duration;
+      localStorage.setItem('sig_intel', JSON.stringify(p));
+    });
+    card.addEventListener('click', () => {
+      p[card.dataset.type.toLowerCase()] += 10000; // heavy weight for click
+      localStorage.setItem('sig_intel', JSON.stringify(p));
+      applyPsychologicalSort();
+    });
+  });
+
+  applyPsychologicalSort();
 }
 
-function applyPersonalization() {
-  let p = JSON.parse(localStorage.getItem('sig_p') || '{"Res":0,"Com":0}');
+function applyPsychologicalSort() {
+  let p = JSON.parse(localStorage.getItem('sig_intel') || '{"res":0,"com":0}');
   const feed = document.getElementById('feed');
   if (feed) {
     const cards = Array.from(feed.children);
-    cards.sort((a,b) => (p[b.dataset.type] || 0) - (p[a.dataset.type] || 0));
+    // Sort so their highest interest is shown FIRST
+    cards.sort((a,b) => (p[b.dataset.type.toLowerCase()] || 0) - (p[a.dataset.type.toLowerCase()] || 0));
     cards.forEach(c => feed.appendChild(c));
-    
-    // Attach event listeners
-    cards.forEach(c => {
-      c.addEventListener('click', () => trackClick(c.dataset.type));
-    });
   }
 }
 
-// 3. AI Vision Simulation
+// 3. AI Vision Simulation (Diagnostic Terminal)
 const fileInput = document.getElementById('vision-file');
 const btnUpload = document.getElementById('btn-upload');
+
+const terminalLines = [
+  "> INITIATING NEURAL AUDIT PROTOCOL...",
+  "> EXTRACTING LOAD-BEARING VECTORS...",
+  "> CROSS-REFERENCING 2024 HURRICANE CODES...",
+  "> CALCULATING STRUCTURAL DEPRECIATION...",
+  "> IDENTIFYING HIGH-YIELD UPGRADE ZONES...",
+  "> INJECTING SIGNATURE ARCHITECTURAL MATRIX...",
+  "> RENDER COMPLETE."
+];
+
 if (btnUpload && fileInput) {
   btnUpload.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', function() {
@@ -89,29 +125,59 @@ if (btnUpload && fileInput) {
         img.style.display = 'block';
         placeholder.style.display = 'none';
         
+        overlay.innerHTML = '';
         overlay.style.display = 'flex';
         scanline.style.display = 'block';
         scanline.classList.add('scanning');
+        img.style.filter = "grayscale(100%) contrast(1.5) brightness(0.5)"; // Start dark
+
+        let delay = 0;
+        terminalLines.forEach((line, index) => {
+          setTimeout(() => {
+            const p = document.createElement('p');
+            p.className = 'terminal-line';
+            p.innerText = line;
+            overlay.appendChild(p);
+          }, delay);
+          delay += Math.random() * 400 + 300; // randomized human-like terminal output
+        });
 
         setTimeout(() => {
-          overlay.innerHTML = "Signature Neural Audit Complete.<br><span class='gold-text' style='font-size:0.6rem'>Potential Value Increase: +42%</span>";
-          img.style.filter = "contrast(1.2) brightness(0.8) sepia(0.3) saturate(0.5)"; // Signature Filter
+          // Final Reveal
+          overlay.style.display = 'none';
+          img.style.filter = "contrast(1.2) brightness(1.1) saturate(1.2)"; // Signature Filter
           scanline.classList.remove('scanning');
           scanline.style.display = 'none';
-        }, 3000);
+          
+          // Trigger Concierge Interruption
+          setTimeout(() => {
+            toggleConcierge();
+            botReply("I have reviewed your space. Are you prepared for the capital required to execute this vision properly?");
+          }, 1500);
+
+        }, delay + 500);
       }
       reader.readAsDataURL(this.files[0]);
     }
   });
 }
 
-// 4. AI Concierge Logic
+// 4. The Interrogator (AI Concierge Logic)
 const concierge = document.getElementById('concierge');
 const bubble = document.getElementById('btn-ai-bubble');
 const closeConcierge = document.getElementById('concierge-close-btn');
 
 function toggleConcierge() {
-  if(concierge) concierge.classList.toggle('active');
+  if(concierge) {
+    concierge.classList.toggle('active');
+    if(concierge.classList.contains('active') && chatStage === 0) {
+      setTimeout(() => {
+        // Intentionally aggressive opening
+        // document.getElementById('chat').innerHTML = '';
+        // botReply("Are you building a legacy, or just another structure?");
+      }, 500);
+    }
+  }
 }
 
 if (bubble) bubble.addEventListener('click', toggleConcierge);
@@ -120,67 +186,89 @@ if (closeConcierge) closeConcierge.addEventListener('click', toggleConcierge);
 let chatStage = 0;
 let projectType = '';
 
-function botReply(msg) {
+function botReply(msg, isUser = false) {
   if (!msg.trim()) return;
   const chat = document.getElementById('chat');
-  const userMsg = document.createElement('div');
-  userMsg.className = "chat-msg user";
-  userMsg.innerText = msg;
-  chat.appendChild(userMsg);
   
-  const chatInput = document.getElementById('chat-input-field');
-  if (chatInput) chatInput.value = '';
-  chat.scrollTop = chat.scrollHeight;
+  if (isUser) {
+    const userMsg = document.createElement('div');
+    userMsg.className = "chat-msg user";
+    userMsg.innerText = msg;
+    chat.appendChild(userMsg);
+    
+    const chatInput = document.getElementById('chat-input-field');
+    if (chatInput) chatInput.value = '';
+    chat.scrollTop = chat.scrollHeight;
 
-  setTimeout(() => {
+    // Simulate thinking delay
+    setTimeout(() => handleLogic(msg), Math.random() * 800 + 600);
+  } else {
     const botMsg = document.createElement('div');
     botMsg.className = "chat-msg bot";
-    
-    if (chatStage === 0) {
-      projectType = msg;
-      botMsg.innerText = "Excellent choice. " + msg + " excellence is our heritage. What is the location or zip code of the project?";
-      chatStage++;
-    } else if (chatStage === 1) {
-      botMsg.innerText = "Perfect. And finally, what is the anticipated budget tier for this project?";
-      chatStage++;
-    } else if (chatStage === 2) {
-      botMsg.innerText = `I have recorded that. Analyzing architectural feasibility for your ${projectType} project. Brandon will reach out shortly to begin the drafting phase.`;
-      chatStage++;
-    } else {
-      botMsg.innerText = `Thank you. The Signature Intelligence Agent will notify Brandon regarding any further details you provide.`;
-    }
-
+    botMsg.innerText = msg;
     chat.appendChild(botMsg);
     chat.scrollTop = chat.scrollHeight;
-  }, 1000);
+  }
+}
+
+function handleLogic(userText) {
+  if (chatStage === 0) {
+    projectType = userText;
+    botReply("Acknowledged. Our minimum engagement for bespoke structures begins at $2.5M. Does your financial reality align with this requirement?");
+    chatStage++;
+  } else if (chatStage === 1) {
+    if(userText.toLowerCase().includes('yes') || userText.toLowerCase().includes('y')) {
+      botReply("Proceeding. What is the specific zip code or neighborhood for this development?");
+      chatStage++;
+    } else {
+      botReply("Signature Contracting does not compromise on materials or execution. We recommend reviewing our tech stack to understand the value of our neural budgeting.");
+      chatStage = 99; // End thread
+    }
+  } else if (chatStage === 2) {
+    botReply(`Location locked. Initiating preliminary demographic and zoning intelligence. Brandon has been notified of your intent. We will not waste your time; do not waste ours.`);
+    chatStage++;
+  } else {
+    // Silent drop - psychological distance
+  }
 }
 
 // Attach Concierge Input Events
 const chatInput = document.getElementById('chat-input-field');
 if (chatInput) {
   chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') botReply(chatInput.value);
+    if (e.key === 'Enter') botReply(chatInput.value, true);
   });
 }
 
 const resBtn = document.querySelector('.btn-residential');
 const comBtn = document.querySelector('.btn-commercial');
-if (resBtn) resBtn.addEventListener('click', () => botReply('Residential'));
-if (comBtn) comBtn.addEventListener('click', () => botReply('Commercial'));
+if (resBtn) resBtn.addEventListener('click', () => botReply('Residential', true));
+if (comBtn) comBtn.addEventListener('click', () => botReply('Commercial', true));
 
-// 5. Vault Logic
+
+// 5. Vault Logic (Live Data Simulation)
 const vaultModal = document.getElementById('vault-modal');
 const btnOpenVault = document.getElementById('btn-open-vault');
 const btnCloseVault = document.getElementById('vault-close-btn');
 const btnDownloadReport = document.getElementById('btn-download-report');
 
-if (btnOpenVault) btnOpenVault.addEventListener('click', () => vaultModal.classList.add('active'));
+if (btnOpenVault) btnOpenVault.addEventListener('click', () => {
+  vaultModal.classList.add('active');
+  // Inject live date math
+  const varianceEl = document.getElementById('vault-variance');
+  if(varianceEl) {
+    let dayOfMonth = new Date().getDate();
+    let calculatedVariance = -(1.2 + (dayOfMonth * 0.01)).toFixed(2); // Fake dynamic number
+    varianceEl.innerText = `VARIANCE: ${calculatedVariance}% (OPTIMIZED)`;
+  }
+});
 if (btnCloseVault) btnCloseVault.addEventListener('click', () => vaultModal.classList.remove('active'));
+
 if (btnDownloadReport) {
   btnDownloadReport.addEventListener('click', () => {
-    btnDownloadReport.innerText = 'Compiling PDF...';
+    btnDownloadReport.innerText = 'AUTHENTICATING...';
     setTimeout(() => {
-      btnDownloadReport.innerText = 'Report Sent to Email';
+      btnDownloadReport.innerText = 'REPORT ENCRYPTED & SENT';
       btnDownloadReport.style.background = 'var(--gold-primary)';
       btnDownloadReport.style.color = '#000';
     }, 1500);
